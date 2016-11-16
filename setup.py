@@ -11,7 +11,7 @@ if sys.argv[:2] == ["setup.py", "bdist_wheel"]:
     # as part of the build, which is unexpected.
     try:
         rmtree("build")
-    except:
+    except Exception:
         pass
 
 
@@ -49,5 +49,6 @@ setup(
         "Framework :: Django",
         "Topic :: Communications :: Email",
         "Topic :: Security :: Cryptography",
-    ]
+    ],
+    test_suite="runtests.runtests",
 )

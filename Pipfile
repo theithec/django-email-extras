@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+pylint-django = "*"
+coverage = "*"
+ipython = "*"
+pudb = "*"
+
+[packages]
+django = ">=1.11"
+django-email-extras = {editable = true,path = "."}
+python-gnupg = "*"
+
+[requires]
+python_version = "3.6"

@@ -4,7 +4,6 @@ from warnings import warn
 
 from django.template import loader
 from django.core.mail import EmailMultiAlternatives, get_connection
-from django.utils import six
 from django.utils.encoding import smart_text
 
 from email_extras.settings import (USE_GNUPG, GNUPG_HOME, ALWAYS_TRUST,
@@ -16,7 +15,11 @@ if USE_GNUPG:
 
 
 class EncryptionFailedError(Exception):
-    pass
+    def __init__(self, addr, body):
+        self.body = body
+        self.addr = addr
+        super(EncryptionFailedError, self).__init__(
+            "Encrypting mail to %s failed.", addr)
 
 
 def addresses_for_key(gpg, key):
@@ -54,7 +57,7 @@ def send_mail(subject, body_text, addr_from, recipient_list,
         html_message = body_html
 
     # Allow for a single address to be passed in.
-    if isinstance(recipient_list, six.string_types):
+    if isinstance(recipient_list, str):
         recipient_list = [recipient_list]
 
     connection = connection or get_connection(
@@ -82,7 +85,8 @@ def send_mail(subject, body_text, addr_from, recipient_list,
         if has_pgp_key(addr_list[0]):
             encrypted = gpg.encrypt(body, addr_list[0],
                                     always_trust=ALWAYS_TRUST)
-            if encrypted == "" and body != "":  # encryption failed
+            encryption_failed = str(encrypted) == "" and body != ""
+            if encryption_failed and not fail_silently:
                 raise EncryptionFailedError("Encrypting mail to %s failed.",
                                             addr_list[0])
             return smart_text(encrypted)
