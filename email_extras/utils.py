@@ -82,7 +82,7 @@ def send_mail(subject, body_text, addr_from, recipient_list,
         if has_pgp_key(addr_list[0]):
             encrypted = gpg.encrypt(body, addr_list[0],
                                     always_trust=ALWAYS_TRUST)
-            if encrypted == "" and body != "":  # encryption failed
+            if str(encrypted) == "" and body != "":  # encryption failed
                 raise EncryptionFailedError("Encrypting mail to %s failed.",
                                             addr_list[0])
             return smart_text(encrypted)
