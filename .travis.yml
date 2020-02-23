@@ -1,0 +1,16 @@
+dist: bionic
+language: python
+python:
+    - "3.6"
+env:
+    - TOX_ENV=py36-django22
+before_install:
+  - sudo apt-get -y install gnupg2
+
+install:
+    - "python3 setup.py install"
+    - "pip install -r dev_requirements.txt"
+
+script: "coverage run --include='email_extras/*' runtests.py"
+after_success:
+  coveralls

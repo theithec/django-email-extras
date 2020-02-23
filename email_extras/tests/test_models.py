@@ -1,10 +1,9 @@
 import os
-from django.test import TestCase
 from unittest.mock import patch
 from unittest import skipIf
-from email_extras.models import Address, Key, GPG
 from email_extras import settings
 from email_extras.tests import KeysTestCase
+
 
 @patch("email_extras.models.GNUPG_HOME", settings.TEST_GNUPG_HOME)
 @patch("email_extras.utils.GNUPG_HOME", settings.TEST_GNUPG_HOME)
@@ -21,4 +20,3 @@ class AddressTestCase(KeysTestCase):
         # reimport
         with open(os.path.join(settings.TEST_GNUPG_HOME, "untrusted_expired.asc")) as keyfile:
             self.gpg.import_keys(keyfile.read())
-

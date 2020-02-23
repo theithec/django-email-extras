@@ -6,8 +6,6 @@ from email_extras.utils import send_mail, EncryptionFailedError
 from email_extras import settings
 
 
-
-
 class KeysTestCase(TestCase):
 
     @classmethod
@@ -31,6 +29,7 @@ class KeysTestCase(TestCase):
         cls.gpg.trust_keys(
             [cls.keys[name].fingerprint for name in ("trusted_valid", "trusted_expired")], "TRUST_ULTIMATE")
 
-        cls.gpg.trust_keys( [cls.keys[name].fingerprint for name in ("untrusted_valid", "untrusted_expired")], "TRUST_UNDEFINED")
+        cls.gpg.trust_keys([cls.keys[name].fingerprint for name in (
+            "untrusted_valid", "untrusted_expired")], "TRUST_UNDEFINED")
 
-        assert len(cls.gpg.list_keys(secret=True)) == 3 , f"Three secret keys in {settings.TEST_GNUPG_HOME} expected."
+        assert len(cls.gpg.list_keys(secret=True)) == 3, f"Three secret keys in {settings.TEST_GNUPG_HOME} expected."

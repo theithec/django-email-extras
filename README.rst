@@ -1,3 +1,10 @@
+.. |travisbadge| image:: https://travis-ci.org/theithec/django-email-extras.svg?branch=master
+.. _travisbadge: https://travis-ci.org/theithec/django-email-extras
+
+
+|travisbadge|_ 
+
+
 Created by `Stephen McDonald <http://twitter.com/stephen_mcd>`_
 
 Introduction

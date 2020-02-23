@@ -1,12 +1,8 @@
-import logging
 from unittest.mock import patch
 import django.core.mail
 from email_extras.utils import send_mail, EncryptionFailedError
 from email_extras import settings
 from email_extras.tests import KeysTestCase
-
-
-logger = logging.getLogger(__name__)
 
 SUBJECT = "Subject"
 BODY = "Text"
@@ -25,7 +21,6 @@ class UtilsTestCase(KeysTestCase):
         mail = django.core.mail.outbox[0]
         self.assertTrue(
             mail.body.startswith("""-----BEGIN PGP MESSAGE-----"""))
-        logger.debug("MAILBODY: %s", mail.body)
         result = self.gpg.decrypt(mail.body, passphrase=passphrase, always_trust=True)
         self.assertEqual(
             str(result), BODY)
@@ -72,4 +67,3 @@ class UtilsTestCase(KeysTestCase):
     def test_fail_send_untrusted_expired_with_always_trust(self):
         with self.assertRaises(EncryptionFailedError):
             send_mail(SUBJECT, BODY, SENDER, [_addr("untrusted_expired")])
-
