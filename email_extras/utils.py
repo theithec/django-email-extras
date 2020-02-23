@@ -15,11 +15,7 @@ if USE_GNUPG:
 
 
 class EncryptionFailedError(Exception):
-    def __init__(self, addr, body):
-        self.body = body
-        self.addr = addr
-        super(EncryptionFailedError, self).__init__(
-            "Encrypting mail to %s failed.", addr)
+    pass
 
 
 def addresses_for_key(gpg, key):

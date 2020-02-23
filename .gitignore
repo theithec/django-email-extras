@@ -6,3 +6,4 @@
 .eggs
 htmlcov
 email_extras/testenv/gpg_keyring/random_seed
+.tox

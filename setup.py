@@ -29,6 +29,7 @@ setup(
     zip_safe=False,
     include_package_data=True,
     install_requires=[
+        "django>=1.11",
         "python-gnupg"
     ],
     extras_require={
